@@ -38,7 +38,12 @@ app.use(limiter);
 //     }
 // }));
 
-app.use(cors());
+
+app.use(cors({
+    origin: 'http://localhost:3000', // Adjust this to your frontend's domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+  }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
