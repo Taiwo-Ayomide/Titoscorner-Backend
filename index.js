@@ -21,7 +21,7 @@ dotenv.config();
 // Create a rate limiter
 const limiter = rateLimit({
     windowMs: 15 * 6 * 1000, // 15 minutes
-    max: 25, // limit each ip to 100 request per windowMs
+    max: 100, // limit each ip to 100 request per windowMs
     message: 'Too many request, try again after 15 minutes'
     // message: `${alert('Too many request, try again after 15min')}`
 });
