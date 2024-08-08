@@ -1,6 +1,6 @@
 const Blog = require("../Model/Blog");
 const router = require("express").Router();
-const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken');
+const { verifyToken, verifyTokenAndAdmin } = require('./verifyToken');
 
 
 
@@ -23,7 +23,7 @@ router.post("/post", verifyTokenAndAdmin, async (req, res) => {
 
 
 // GET ALL BLOG
-router.get("/", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
     try {
         const blog = await Blog.find();
         res.status(200).json(blog);
@@ -35,7 +35,7 @@ router.get("/", verifyTokenAndAuthorization, async (req, res) => {
 
 
 // GET ONE BLOG
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", verifyToken, async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
         res.status(200).json(blog);

@@ -3,7 +3,7 @@ const router = require("express").Router();
 const multer = require('multer');
 const streamifier = require('streamifier');
 const cloudinary = require('./cloudinaryConfig');
-const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken');
+const { verifyToken, verifyTokenAndAdmin } = require('./verifyToken');
 
 
 // Multer setup for file uploads
@@ -64,7 +64,7 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
 });
 
 // GET ALL RECIPES
-router.get("/", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
     try {
         const recipe = await Recipe.find();
         res.status(200).json(recipe);
@@ -76,7 +76,7 @@ router.get("/", verifyTokenAndAuthorization, async (req, res) => {
 
 
 // GET ONE RECIPE
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", verifyToken, async (req, res) => {
     try {
         const recipe = await Recipe.findById(req.params.id);
         res.status(200).json(recipe);
