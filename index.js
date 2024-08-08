@@ -39,11 +39,18 @@ app.use(limiter);
 // }));
 
 
+const allowedOrigins = ['https://admin-q3gy.onrender.com/', 'https://titoscorner.onrender.com/'];
+
 app.use(cors({
-    origin: 'http://localhost:3000', // Adjust this to your frontend's domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-  }));
+  origin: function (origin, callback) {
+    // Check if the incoming origin is in the allowed origins array
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
