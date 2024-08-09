@@ -39,7 +39,7 @@ app.use(limiter);
 // }));
 
 
-const allowedOrigins = ['https://admin-q3gy.onrender.com/', 'https://titoscorner.onrender.com/'];
+const allowedOrigins = ['https://admin-q3gy.onrender.com', 'https://titoscorner.onrender.com'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -51,6 +51,7 @@ app.use(cors({
     }
   }
 }));
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
