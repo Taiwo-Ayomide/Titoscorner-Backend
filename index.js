@@ -39,7 +39,7 @@ app.use(limiter);
 // }));
 
 
-const allowedOrigins = ['https://admin-q3gy.onrender.com', 'https://titoscorner.onrender.com', 'https://titoscorner.vercel.app', 'https://titoscorneradmin.vercel.app'];
+const allowedOrigins = ['https://localhost:3000', 'https://titoscorner.vercel.app', 'https://titoscorneradmin.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -63,7 +63,7 @@ moongoose
     .then((console.log("DBCOnnected Successfully")));
     // .catch();
  
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     res.send('Welcome to backend world');
 });
 app.use("/api/users", userRoute);
