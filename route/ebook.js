@@ -3,7 +3,7 @@ const router = require("express").Router();
 const multer = require('multer');
 const streamifier = require('streamifier');
 const cloudinary = require('./cloudinaryConfig');
-const { verifyToken, verifyTokenAndAdmin } = require('./verifyToken');
+const { verifyTokenAndAdmin } = require('./verifyToken');
 
 
 
@@ -80,7 +80,7 @@ router.get('/download/:id', (req, res) => {
     });
 })
 // GET ALL EBOOK
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const ebook = await Ebook.find();
         res.status(200).json(ebook);
@@ -92,7 +92,7 @@ router.get("/", verifyToken, async (req, res) => {
 
 
 // GET ONE EBOOK
-router.get("/find/:id", verifyToken, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
     try {
         const ebook = await Ebook.findById(req.params.id);
         res.status(200).json(ebook);

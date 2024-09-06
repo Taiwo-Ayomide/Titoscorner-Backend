@@ -64,7 +64,7 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
 });
 
 // GET ALL RECIPES
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const recipe = await Recipe.find();
         res.status(200).json(recipe);
@@ -76,7 +76,7 @@ router.get("/", verifyToken, async (req, res) => {
 
 
 // GET ONE RECIPE
-router.get("/find/:id", verifyToken, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
     try {
         const recipe = await Recipe.findById(req.params.id);
         res.status(200).json(recipe);

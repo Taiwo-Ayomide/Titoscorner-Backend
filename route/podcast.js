@@ -4,7 +4,7 @@ const cloudinary = require('./cloudinaryConfig');
 const Podcast = require('../Model/Podcast');
 const router = express.Router();
 const streamifier = require('streamifier');
-const { verifyToken, verifyTokenAndAdmin } = require('./verifyToken');
+const { verifyTokenAndAdmin } = require('./verifyToken');
 
 
 
@@ -68,7 +68,7 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('audioFile'), async (r
 
 
 // GET ALL PODCAST
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const podcast = await Podcast.find();
         res.status(200).json(podcast);
@@ -79,7 +79,7 @@ router.get("/", verifyToken, async (req, res) => {
 
 
 // GET ONE PODCAST
-router.get("/find/:id", verifyToken, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
     try {
         const podcast = await Podcast.findById(req.params.id);
         res.status(200).json(podcast);
