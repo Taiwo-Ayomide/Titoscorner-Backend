@@ -39,7 +39,7 @@ app.use(limiter);
 // }));
 
 
-const allowedOrigins = ['https://localhost:3000', 'https://titoscorner.vercel.app', 'https://titoscorneradmin.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://titoscorner.vercel.app', 'https://titoscorneradmin.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
