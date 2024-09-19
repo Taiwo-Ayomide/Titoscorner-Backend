@@ -3,7 +3,6 @@ const router = require("express").Router();
 const { verifyTokenAndAdmin } = require('./verifyToken');
 
 
-
 // POST
 router.post("/post", verifyTokenAndAdmin, async (req, res) => {
     const newBlog = new Blog ({

@@ -35,11 +35,11 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
     }
 
     try {
-        // Upload to Cloudinary
-        const imageUrl = await uploadToCloudinary(imageFile.buffer, imageFile.originalname);
+        
 
         // Create a new audio document
-        const newImage = new Recipe({
+        // const newImage = new // Upload to Cloudinary
+        const imageUrl = await uploadToCloudinary(imageFile.buffer, imageFile.originalname);Recipe({
             imageUrl,
             backgroundstory,
             ingredients,
@@ -65,13 +65,26 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
 
 // GET ALL RECIPES
 router.get("/", async (req, res) => {
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 10; // Default to 10 recipes per page
+
     try {
-        const recipe = await Recipe.find();
-        res.status(200).json(recipe);
+        const recipes = await Recipe.find()
+            .skip((page - 1) * limit) // Skip previous pages
+            .limit(limit); // Limit number of recipes per page
+        const totalRecipes = await Recipe.countDocuments(); // Total number of recipes
+
+        res.status(200).json({
+            recipes,
+            totalRecipes,
+            totalPages: Math.ceil(totalRecipes / limit),
+            currentPage: page
+        });
     } catch (error) {
         res.status(500).json(error);
     }
 });
+
 
 
 
