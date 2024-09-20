@@ -35,11 +35,11 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
     }
 
     try {
-        
+        // Upload to Cloudinary
+        const imageUrl = await uploadToCloudinary(imageFile.buffer, imageFile.originalname);
 
-        // Create a new audio document
-        // const newImage = new // Upload to Cloudinary
-        const imageUrl = await uploadToCloudinary(imageFile.buffer, imageFile.originalname);Recipe({
+        // Create a new recipe document
+        const newRecipe = new Recipe({
             imageUrl,
             backgroundstory,
             ingredients,
@@ -47,11 +47,11 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
         });
 
         // Save to MongoDB
-        await newImage.save();
+        await newRecipe.save();
 
-        res.status(201).json({ message: 'Audio uploaded successfully', audio: newImage });
+        res.status(201).json({ message: 'Recipe uploaded successfully', recipe: newRecipe });
     } catch (error) {
-        console.error('Error saving audio:', error);
+        console.error('Error saving recipe:', error);
 
         if (error.name === 'ValidationError') {
             // Extract validation error messages
@@ -63,10 +63,11 @@ router.post('/upload', verifyTokenAndAdmin, upload.single('imageFile'), async (r
     }
 });
 
+
 // GET ALL RECIPES
 router.get("/", async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = parseInt(req.query.limit) || 10; // Default to 10 recipes per page
+    const limit = parseInt(req.query.limit) || 6; // Default to 6 recipes per page
 
     try {
         const recipes = await Recipe.find()
